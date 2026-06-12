@@ -86,3 +86,13 @@ export async function POST(req: Request) {
     summary,
   });
 }
+export async function GET() {
+  return POST(
+    new Request("http://localhost", {
+      method: "POST",
+      body: JSON.stringify({
+        sector: "ai",
+      }),
+    })
+  );
+}

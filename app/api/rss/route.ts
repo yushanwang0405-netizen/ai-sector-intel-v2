@@ -6,8 +6,8 @@ export async function GET() {
   const parser = new Parser();
 
   const feed = await parser.parseURL(
-    "https://www.marktechpost.com/feed/"
-  );
+  "https://www.marktechpost.com/feed/"
+);
 
   const newsList = feed.items.slice(0, 5);
 
@@ -121,6 +121,13 @@ sentiment必须从以下选项中选择：
   }
 }
 
+  const sectors = [
+  "ai",
+  "robot",
+  "semiconductor",
+  "compute",
+  "new_energy",
+];
 return NextResponse.json({
   success: true,
   inserted,

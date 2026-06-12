@@ -2,11 +2,12 @@ import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { sectorsData } from "./data/sectors";
 
-const icons: Record<string, string> = {
+const icons = {
   ai: "🤖",
   robot: "🦾",
-  energy: "⚡",
-  pharma: "💊",
+  semiconductor: "💾",
+  compute: "🖥️",
+  new_energy: "⚡",
 };
 
 export default async function HomePage() {
@@ -76,7 +77,7 @@ export default async function HomePage() {
                 >
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-2xl font-bold">
-                      {icons[key]} {sector.name}
+                      {icons[key as keyof typeof icons]}
                     </h2>
 
                     <span className="text-xs text-gray-400">

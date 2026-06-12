@@ -16,6 +16,7 @@ export default function AdminPage() {
   const [summaryLoading, setSummaryLoading] =
   useState(false);
   const [rawNews, setRawNews] = useState("");
+  const [rssLoading, setRssLoading] =useState(false);
 
   async function loadNews() {
   const { data } = await supabase
@@ -113,6 +114,31 @@ export default function AdminPage() {
   }
 }
 
+  async function fetchRSS() {
+  try {
+    setRssLoading(true);
+
+    const response =
+      await fetch("/api/rss");
+
+    const data =
+      await response.json();
+
+    setMessage(
+      data.message ||
+      "RSS抓取成功"
+    );
+
+    await loadNews();
+  } catch (error) {
+    console.error(error);
+
+    setMessage("RSS抓取失败");
+  } finally {
+    setRssLoading(false);
+  }
+}
+
   async function generateSummary() {
   try {
     setSummaryLoading(true);
@@ -126,7 +152,7 @@ export default function AdminPage() {
             "application/json",
         },
         body: JSON.stringify({
-          sector: "ai",
+          sector,
         }),
       }
     );
@@ -235,8 +261,9 @@ export default function AdminPage() {
         >
           <option value="ai">AI</option>
           <option value="robot">机器人</option>
-          <option value="energy">新能源</option>
-          <option value="pharma">医药</option>
+          <option value="semiconductor">半导体</option>
+          <option value="compute">算力</option>
+          <option value="new_energy">新能源</option>
         </select>
 
         <input
@@ -321,8 +348,25 @@ export default function AdminPage() {
         >
         {summaryLoading
         ? "生成中..."
-        : "生成AI板块总结"}
+        : `生成${sector}板块总结`}
         </button>
+
+        <button
+  onClick={fetchRSS}
+  disabled={rssLoading}
+  className="
+    bg-orange-600
+    text-white
+    px-6
+    py-3
+    rounded-lg
+    ml-3
+  "
+>
+  {rssLoading
+    ? "抓取中..."
+    : "抓取RSS新闻"}
+</button>
         
         <hr className="my-10" />
 
