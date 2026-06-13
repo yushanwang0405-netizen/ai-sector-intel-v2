@@ -128,6 +128,21 @@ sentiment必须从以下选项中选择：
   "compute",
   "new_energy",
 ];
+for (const sector of sectors) {
+  await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/generate-summary`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sector,
+      }),
+    }
+  );
+}
+
 return NextResponse.json({
   success: true,
   inserted,

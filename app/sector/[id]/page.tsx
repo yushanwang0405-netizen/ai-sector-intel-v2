@@ -11,6 +11,15 @@ export default async function SectorPage({ params }: Props) {
   const { id } = await params;
 
   const sectorData = sectorsData[id.toLowerCase()];
+
+  if (!sectorData) {
+  return (
+    <main className="p-10">
+      板块不存在
+    </main>
+  );
+}
+
   const { data: news } = await supabase
   .from("news")
   .select("*")
@@ -40,6 +49,15 @@ export default async function SectorPage({ params }: Props) {
     (item) => item.sentiment === "利空"
   ) || [];
 
+  const sentiment =
+  positiveNews.length >
+  negativeNews.length
+    ? "偏暖"
+    : positiveNews.length <
+      negativeNews.length
+    ? "偏弱"
+    : "中性";
+
   return (
     <main className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
@@ -51,7 +69,7 @@ export default async function SectorPage({ params }: Props) {
 
           <div className="flex items-center gap-3 flex-wrap">
             <span className="rounded-full bg-green-50 px-4 py-2 text-green-700 font-medium">
-              🟢 市场情绪：偏暖
+              🟢 市场情绪：{sentiment}
             </span>
 
             <span className="text-gray-500">

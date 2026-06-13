@@ -107,7 +107,7 @@ policies: [],
 
 },
 
-energy: {
+new_energy: {
 name: "新能源",
 subSectors: [
 "光伏",
@@ -126,202 +126,28 @@ policies: [],
 
 },
 
-pharma: {
-name: "创新药",
+compute: {
+name: "算力",
+
 subSectors: [
-"创新药",
-"CRO",
-"CXO",
-"医疗器械",
-"AI制药",
-"减肥药",
-"ADC",
-"基因治疗",
+"GPU",
+"服务器",
+"液冷",
+"CPO",
+"光模块",
+"数据中心",
+"AI算力",
+"云计算",
+"边缘计算",
 ],
 
-summary: "创新药研发进展受到关注。",
+summary: "算力板块受AI大模型训练需求驱动，持续受到市场关注。",
+
 lastUpdate: "2026-06-06",
+
 news: [],
+
 policies: [],
-
-
 },
 
-auto: {
-name: "智能驾驶",
-subSectors: [
-"自动驾驶",
-"激光雷达",
-"智能座舱",
-"汽车电子",
-"车载芯片",
-],
-
-summary: "智能驾驶产业链持续活跃。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-consumer_electronics: {
-name: "消费电子",
-subSectors: [
-"苹果产业链",
-"XR",
-"VR",
-"AR",
-"折叠屏",
-"OLED",
-"智能穿戴",
-],
-
-summary: "消费电子关注新品发布周期。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-aerospace: {
-name: "航天军工",
-subSectors: [
-"商业航天",
-"卫星互联网",
-"北斗导航",
-"无人机",
-"军工电子",
-"航空发动机",
-],
-
-summary: "军工订单与商业航天受关注。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-chemical: {
-name: "化工材料",
-subSectors: [
-"氟化工",
-"磷化工",
-"有机硅",
-"制冷剂",
-"碳纤维",
-"化工新材料",
-],
-
-summary: "化工原材料价格波动明显。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-metals: {
-name: "有色金属",
-subSectors: [
-"铜",
-"黄金",
-"白银",
-"稀土",
-"锂",
-"镍",
-"钴",
-"铝",
-],
-
-summary: "金属价格走势受到市场关注。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-power: {
-name: "电力能源",
-subSectors: [
-"火电",
-"水电",
-"核电",
-"绿电",
-"煤炭",
-"天然气",
-"电网设备",
-],
-
-summary: "电力板块运行平稳。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-data: {
-name: "数据要素",
-subSectors: [
-"数据交易",
-"数据安全",
-"数据治理",
-"隐私计算",
-],
-
-summary: "数据要素市场建设持续推进。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-xinchuang: {
-name: "信创",
-subSectors: [
-"国产CPU",
-"国产数据库",
-"国产操作系统",
-"国产办公软件",
-"网络安全",
-],
-
-summary: "信创国产替代逻辑持续。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-low_altitude: {
-name: "低空经济",
-subSectors: [
-"eVTOL",
-"无人机",
-"飞控系统",
-"空管系统",
-],
-
-summary: "低空经济基础设施建设推进。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
-
-consumer: {
-name: "消费服务",
-subSectors: [
-"白酒",
-"食品饮料",
-"旅游酒店",
-"免税",
-"连锁零售",
-"新消费",
-],
-
-summary: "消费板块关注需求恢复情况。",
-lastUpdate: "2026-06-06",
-news: [],
-policies: [],
-
-},
 };
