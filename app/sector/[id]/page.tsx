@@ -73,7 +73,12 @@ export default async function SectorPage({ params }: Props) {
             </span>
 
             <span className="text-gray-500">
-              更新日期：{sectorData.lastUpdate}
+              更新日期：
+            {summaryData?.[0]?.updated_at
+              ? new Date(
+              summaryData[0].updated_at
+              ).toLocaleDateString()
+              : sectorData.lastUpdate}
             </span>
           </div>
         </div>
