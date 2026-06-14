@@ -5,16 +5,33 @@ import { supabase } from "@/lib/supabase";
 export async function GET() {
   const parser = new Parser();
 
-  const feed = await parser.parseURL(
-  "https://www.marktechpost.com/feed/"
-);
+  const feeds = [
+  "https://www.marktechpost.com/feed/",
+  "https://blogs.nvidia.com/feed/",
+  "https://electrek.co/feed/",
+  "https://www.semiengineering.com/feed/",
+  "https://www.semiconductor-digest.com/feed/",
+];
 
-  const newsList = feed.items.slice(0, 5);
+  const allNews = [];
+
+for (const url of feeds) {
+  try {
+    const feed = await parser.parseURL(url);
+
+    allNews.push(
+      ...feed.items.slice(0, 5)
+    );
+  } catch (error) {
+    console.log("RSS抓取失败:", url);
+  }
+}
 
   let inserted = 0;
 let skipped = 0;
 
-for (const item of newsList) {
+const newsToProcess = allNews.slice(0, 4);
+for (const item of newsToProcess) {
   const response = await fetch(
     "https://api.deepseek.com/chat/completions",
     {
@@ -45,6 +62,13 @@ robot
 semiconductor
 compute
 new_energy
+
+分类规则：
+- 如果新闻重点是GPU、AI服务器、数据中心、云计算、算力建设，sector 返回 compute。
+- 如果新闻重点是芯片制造、晶圆厂、先进制程、封装测试、EDA、存储芯片、半导体设备、光刻机，sector 返回 semiconductor。
+- 如果新闻重点是大模型、AI Agent、AI应用，sector 返回 ai。
+- 如果新闻重点是电动车、光伏、储能、电池，sector 返回 new_energy。
+- 如果新闻重点是机器人、人形机器人、工业自动化，sector 返回 robot。
 
 subSector必须从以下选项中选择：
 
@@ -79,7 +103,16 @@ sentiment必须从以下选项中选择：
           },
           {
             role: "user",
-            content: item.title || "",
+      content: `
+      标题：
+      ${item.title || ""}
+
+      摘要：
+      ${item.contentSnippet || ""}
+
+      链接：
+      ${item.link || ""}
+      `,
           },
         ],
         temperature: 0.3,
@@ -113,7 +146,7 @@ sentiment必须从以下选项中选择：
       sub_sector: parsed.subSector,
       sentiment: parsed.sentiment,
       summary: parsed.summary,
-      source: "MarkTechPost",
+      source: item.link || "MarkTechPost",
     });
 
   if (!error) {
@@ -121,7 +154,7 @@ sentiment必须从以下选项中选择：
   }
 }
 
-  const sectors = [
+  /*const sectors = [
   "ai",
   "robot",
   "semiconductor",
@@ -142,7 +175,7 @@ for (const sector of sectors) {
     }
   );
 }
-
+*/
 return NextResponse.json({
   success: true,
   inserted,
