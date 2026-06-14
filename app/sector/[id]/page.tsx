@@ -51,6 +51,25 @@ export default async function SectorPage({ params }: Props) {
 
   const totalNews = news?.length || 0;
 
+  const subSectorGroups: Record<string, any[]> = {};
+
+news?.forEach((item) => {
+  const key =
+    item.sub_sector || "其它";
+
+  if (!subSectorGroups[key]) {
+    subSectorGroups[key] = [];
+  }
+
+  subSectorGroups[key].push(item);
+});
+
+const sortedSubSectors = Object.entries(
+  subSectorGroups
+).sort(
+  (a, b) => b[1].length - a[1].length
+);
+
   const sentiment =
     positiveNews.length > negativeNews.length
       ? "偏暖"
@@ -123,75 +142,68 @@ export default async function SectorPage({ params }: Props) {
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-3xl bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-xl font-bold text-emerald-700">
-              🔥 重点利好
-            </h2>
+        <section className="space-y-6">
+  <h2 className="text-2xl font-bold">
+    📰 细分赛道动态
+  </h2>
 
-            {positiveNews.length === 0 ? (
-              <p className="text-slate-500">暂无重点利好</p>
-            ) : (
-              <div className="space-y-4">
-                {positiveNews.map((item) => (
-                  <a
-                    key={item.id}
-                    href={item.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4 transition hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="mb-2 font-semibold">
-                      {item.title}
-                    </div>
+  {sortedSubSectors.map(
+    ([subSector, items]) => (
+      <div
+        key={subSector}
+        className="rounded-3xl bg-white p-6 shadow-sm"
+      >
+        <div className="mb-5 flex items-center justify-between">
+          <h3 className="text-xl font-bold">
+            {subSector}
+          </h3>
 
-                    <p className="line-clamp-3 text-sm leading-6 text-slate-600">
-                      {item.summary}
-                    </p>
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-500">
+            {items.length} 条新闻
+          </span>
+        </div>
 
-                    <div className="mt-3 text-sm font-medium text-blue-600">
-                      查看原文 →
-                    </div>
-                  </a>
-                ))}
+        <div className="space-y-4">
+          {items.map((item) => (
+            <a
+              key={item.id}
+              href={item.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-2xl border p-4 transition hover:shadow-md"
+            >
+              <div className="mb-3 flex items-center gap-2">
+                <span
+                  className={`rounded-full px-2 py-1 text-xs font-medium ${
+                    item.sentiment === "利好"
+                      ? "bg-emerald-100 text-emerald-700"
+                      : item.sentiment === "利空"
+                      ? "bg-rose-100 text-rose-700"
+                      : "bg-slate-100 text-slate-700"
+                  }`}
+                >
+                  {item.sentiment}
+                </span>
               </div>
-            )}
-          </div>
 
-          <div className="rounded-3xl bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-xl font-bold text-rose-700">
-              ⚠️ 重点利空
-            </h2>
-
-            {negativeNews.length === 0 ? (
-              <p className="text-slate-500">暂无重点利空</p>
-            ) : (
-              <div className="space-y-4">
-                {negativeNews.map((item) => (
-                  <a
-                    key={item.id}
-                    href={item.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-2xl border border-rose-100 bg-rose-50/60 p-4 transition hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="mb-2 font-semibold">
-                      {item.title}
-                    </div>
-
-                    <p className="line-clamp-3 text-sm leading-6 text-slate-600">
-                      {item.summary}
-                    </p>
-
-                    <div className="mt-3 text-sm font-medium text-blue-600">
-                      查看原文 →
-                    </div>
-                  </a>
-                ))}
+              <div className="mb-2 font-semibold">
+                {item.title}
               </div>
-            )}
-          </div>
-        </section>
+
+              <p className="text-sm leading-6 text-slate-600">
+                {item.summary}
+              </p>
+
+              <div className="mt-3 text-sm font-medium text-blue-600">
+                查看原文 →
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )
+  )}
+</section>
 
         <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
           <h2 className="mb-5 text-xl font-bold">📄 政策动态</h2>

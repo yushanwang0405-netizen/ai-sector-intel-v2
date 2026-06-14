@@ -100,7 +100,9 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
         <AskBox />
+
         <section className="mb-8 grid gap-4 md:grid-cols-4">
           <div className="rounded-3xl bg-white p-5 shadow-sm">
             <div className="text-sm text-slate-500">
@@ -140,18 +142,16 @@ export default async function HomePage() {
         </section>
 
         <section>
-          <div className="mb-5 flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold">
-                重点跟踪板块
-              </h2>
-              <p className="mt-1 text-sm text-slate-500">
-                点击进入详情页查看新闻、摘要与政策动态
-              </p>
-            </div>
+          <div className="mb-5">
+            <h2 className="text-2xl font-bold">
+              重点跟踪板块
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              每个板块下展示当前最活跃的细分赛道
+            </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {keys.map((key) => {
               const sector = sectorsData[key];
 
@@ -176,6 +176,23 @@ export default async function HomePage() {
                   : positiveCount < negativeCount
                   ? "偏弱"
                   : "中性";
+
+              const subSectorCount: Record<string, number> =
+                {};
+
+              sectorNews.forEach((item) => {
+                if (!item.sub_sector) return;
+
+                subSectorCount[item.sub_sector] =
+                  (subSectorCount[item.sub_sector] || 0) +
+                  1;
+              });
+
+              const hotSubSectors = Object.entries(
+                subSectorCount
+              )
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3);
 
               return (
                 <Link
@@ -214,6 +231,37 @@ export default async function HomePage() {
                       <span className="rounded-full bg-rose-50 px-3 py-1 text-sm font-medium text-rose-700">
                         利空 {negativeCount}
                       </span>
+                    </div>
+
+                    <div className="mb-5 rounded-2xl bg-slate-50 p-4">
+                      <div className="mb-3 text-xs font-medium text-slate-400">
+                        热门细分方向
+                      </div>
+
+                      {hotSubSectors.length === 0 ? (
+                        <div className="text-sm text-slate-400">
+                          暂无数据
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {hotSubSectors.map(
+                            ([name, count]) => (
+                              <div
+                                key={name}
+                                className="flex items-center justify-between text-sm"
+                              >
+                                <span className="font-medium text-slate-700">
+                                  {name}
+                                </span>
+
+                                <span className="text-slate-400">
+                                  {count}
+                                </span>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="border-t pt-4 text-sm font-medium text-blue-600">
