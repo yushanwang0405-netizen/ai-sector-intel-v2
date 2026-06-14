@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { sectorsData } from "./data/sectors";
+import AskBox from "./components/AskBox";
 
 const icons = {
   ai: "🤖",
@@ -99,7 +100,7 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-
+        <AskBox />
         <section className="mb-8 grid gap-4 md:grid-cols-4">
           <div className="rounded-3xl bg-white p-5 shadow-sm">
             <div className="text-sm text-slate-500">

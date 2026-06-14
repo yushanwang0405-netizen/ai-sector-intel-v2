@@ -1,5 +1,6 @@
 import { sectorsData } from "../../data/sectors";
 import { supabase } from "@/lib/supabase";
+import AskBox from "@/app/components/AskBox";
 
 interface Props {
   params: Promise<{
@@ -115,6 +116,7 @@ export default async function SectorPage({ params }: Props) {
 
         <section className="mb-8 rounded-3xl bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-bold">📋 今日总结</h2>
+          <AskBox sector={sectorKey} />
 
           <p className="leading-8 text-slate-700">
             {summaryData?.[0]?.summary ?? sectorData.summary}
