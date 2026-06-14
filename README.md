@@ -1,36 +1,194 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Sector Intelligence
 
-## Getting Started
+基于 Next.js + Supabase + DeepSeek 构建的 AI 板块情报平台。
 
-First, run the development server:
+项目通过自动抓取产业新闻，利用大模型完成板块分类、情绪分析与摘要生成，帮助投资者快速了解 AI、机器人、算力、半导体、新能源等热门赛道的动态变化。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 项目演示
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+在线地址：
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+https://ai-sector-intel-v2-ioqk.vercel.app
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 项目背景
 
-To learn more about Next.js, take a look at the following resources:
+投资相关信息分散在新闻网站、行业媒体、政策公告等多个渠道。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+普通投资者往往需要花费大量时间筛选信息，且难以快速判断某条新闻对行业的影响方向。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+本项目尝试利用大模型自动完成：
 
-## Deploy on Vercel
+* 新闻抓取
+* 板块分类
+* 利好利空判断
+* 摘要生成
+* 板块情报聚合
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+降低信息获取成本。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 核心功能
+
+### 1. 自动新闻抓取
+
+通过 RSS 自动获取行业资讯，包括：
+
+* MarkTechPost（AI）
+* NVIDIA Blog（算力）
+* Electrek（新能源）
+* Robot Report（机器人）
+* 其他行业媒体
+
+系统定时抓取最新新闻并自动入库。
+
+---
+
+### 2. AI 板块分类
+
+使用 DeepSeek 对新闻进行分析。
+
+自动识别新闻所属板块：
+
+* AI
+* Robot
+* Semiconductor
+* Compute
+* New Energy
+
+同时识别细分赛道：
+
+* AI Agent
+* 大模型
+* GPU
+* 算力基础设施
+* 人形机器人
+* 自动驾驶
+* 光伏
+* 储能
+* 芯片设计
+* 半导体设备
+
+---
+
+### 3. 情绪分析
+
+AI 自动判断新闻影响：
+
+* 利好
+* 利空
+* 中性
+
+用于生成板块情绪指标。
+
+---
+
+### 4. AI 摘要生成
+
+针对每条新闻生成中文摘要。
+
+同时基于板块内新闻自动生成：
+
+* 今日总结
+* 板块观点
+* 情绪概览
+
+---
+
+### 5. 板块情报看板
+
+支持查看：
+
+* 新闻总数
+* 利好数量
+* 利空数量
+* 市场情绪
+* 最新动态
+* 政策信息
+
+帮助用户快速了解板块整体情况。
+
+---
+
+## 技术栈
+
+### Frontend
+
+* Next.js 16
+* React
+* TypeScript
+* Tailwind CSS
+
+### Backend
+
+* Next.js Route Handlers
+* Supabase
+
+### AI
+
+* DeepSeek API
+
+### Deployment
+
+* Vercel
+
+---
+
+## 数据流程
+
+RSS News
+
+↓
+
+DeepSeek 分类与摘要
+
+↓
+
+Supabase 存储
+
+↓
+
+生成板块总结
+
+↓
+
+前端展示
+
+---
+
+## 项目亮点
+
+### 多源行业资讯聚合
+
+自动收集不同产业链信息源。
+
+### AI 自动结构化处理
+
+将非结构化新闻转换为：
+
+* 板块
+* 情绪
+* 摘要
+
+等结构化数据。
+
+### 自动化情报生成
+
+无需人工整理即可形成板块情报。
+
+### 轻量级全栈架构
+
+使用 Next.js + Supabase 实现完整数据链路。
+
+---
+
+## 后续规划
+
+* 更多产业链数据源
+* 新闻重要性评分
+* AI 趋势分析
+* 板块热度排行
+* 历史情报归档
+* 投资主题追踪
